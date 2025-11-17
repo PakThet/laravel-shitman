@@ -23,28 +23,37 @@ class ProductController extends Controller
     public function store(SaveProductRequest $request)
     {
         Product::create($request->validated());
-        return redirect()->route('products.index')->with('status', 'Product created successfully');
+        return redirect()->route('products.index')
+                        ->with('status', 'Product created successfully');
     }
 
 
     public function show(Product $products){
-        return view('products.show', compact('products'));
+        return view(
+            'products.show',
+             compact('products'));
     }
 
 
 
     public function edit(Product $products){
-        return view('products.edit', compact('products'));
+        return view(
+            'products.edit', 
+            compact('products'));
     }
 
     public function update(SaveProductRequest $request, Product $product){
 
         $product->update($request->validated());
 
-        return redirect()->route('products.index')->with('status', "Product updated successfully");
+        return redirect()->route('products.index')
+                        ->with('status', "Product updated successfully");
     }
 
-    public function delete(string $id){
-        return Product::findOrFail($id)->delete();
+    public function destroy(Product $product){
+        $product->delete();
+
+        return redirect()->route('products.index')
+                        ->with('status', 'Product deleted successfully!');
     }
 }

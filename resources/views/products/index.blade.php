@@ -12,6 +12,11 @@
         <h2>{{ $product->name }}</h2>
         <p>{{ $product->description }}</p>
         <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-success">Edit</a>
+        <form action="{{ route('products.destroy', $product) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this product?');">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-outline-danger">Delete</button>
+        </form>
         <p>================================</p>
     @endforeach
 </x-layout>
