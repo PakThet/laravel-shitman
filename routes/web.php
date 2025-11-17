@@ -23,3 +23,6 @@ Route::get('/products/{products}',[ProductController::class, 'show'])
 
 Route::get('/products/{products}/edit',[ProductController::class, 'edit'])
 ->name('products.edit');
+
+Route::patch('/products/{product}/update',[ProductController::class, 'update'])
+->name('products.update');

@@ -5,7 +5,8 @@
     <x-error />
 
 
-    <form action="" method="post">
+    <form action="{{ route('products.update', $products) }}" method="post">
+        @method('PATCH')
         <x-products.form :products="$products" />
     </form>
 

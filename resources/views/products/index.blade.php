@@ -1,5 +1,10 @@
 <x-layout>
     <h1>This is Product Page</h1>
+     @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif 
     <a href="{{ route('products.create') }}" class="btn btn-primary">Create Product</a>
     <p>================================</p>
     @foreach ($products as $product)

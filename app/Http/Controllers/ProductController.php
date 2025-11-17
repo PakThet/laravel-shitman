@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         return view(
             'products.index',
             ['products' => Product::all()]
@@ -19,15 +20,10 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-    public function store(Request $request)
+    public function store(SaveProductRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:120',
-            'description' => 'string|nullable',
-            'size' => 'required|numeric',
-        ]);
-        Product::create($request->only(['name', 'description', 'size']));
-        return redirect()->route('products.index');
+        Product::create($request->validated());
+        return redirect()->route('products.index')->with('status', 'Product created successfully');
     }
 
 
@@ -41,17 +37,11 @@ class ProductController extends Controller
         return view('products.edit', compact('products'));
     }
 
-    public function update(Request $request, string $id){
-        $product = Product::findOrFail($id);
-        $validated = $request->validate([
-            'name' => 'sometimes|max:120',
-            'description' => 'sometimes|string|nullable',
-            'size' => 'sometimes|numeric',
-        ]);
+    public function update(SaveProductRequest $request, Product $product){
 
-        $product->update($validated);
-        
-        return redirect()->route('products.index');
+        $product->update($request->validated());
+
+        return redirect()->route('products.index')->with('status', "Product updated successfully");
     }
 
     public function delete(string $id){
