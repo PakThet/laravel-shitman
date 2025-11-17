@@ -1,0 +1,16 @@
+
+
+- create components 
+    php artisan make:component layout --view
+
+    php artisan make:view products.show
+
+    php artisan make:component products.form --view
+
+
+
+$slot = x-layout
+
+
+docker-compose up -d --build
+docker-compose exec -it app/db bash
